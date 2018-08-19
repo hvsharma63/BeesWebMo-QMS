@@ -3,7 +3,7 @@ if( ! session_id() )
 	@ session_start();
 	
 if( ! defined('SITE_URL') ) 	
-	define('SITE_URL', 'http://localhost:81/altair');	// Write URL without /
+	define('SITE_URL', 'http://localhost/BeesWebMo-QMS/');	// Write URL without /
 	
 if( ! defined('SITE_DIR') )
 	define('SITE_DIR', __DIR__);		// This will return path without /
@@ -27,7 +27,7 @@ if( ! defined('DB_PASSWORD') )
 	define('DB_PASSWORD', "");
 
 if( ! defined('DB_NAME') )
-	define('DB_NAME', "pronostiok");
+	define('DB_NAME', "beeswebmo");
 	
 if( ! defined("AUTH_SALT") )
 	define("AUTH_SALT", "RzX6*?HM#Lfb2JujZMyTWP.Kfp{FggQ+IVt~6:aMwO+ky=spPg,/g(wEf;Ek?*~/");	
