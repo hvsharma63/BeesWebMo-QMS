@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2018 at 09:26 AM
+-- Generation Time: Aug 20, 2018 at 03:07 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -30,11 +30,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `call_data` (
   `id` int(30) NOT NULL,
+  `user` int(11) NOT NULL,
   `counter` int(30) NOT NULL,
   `department` int(11) NOT NULL,
-  `call_status` int(11) NOT NULL COMMENT '0 Served. 1 Missed',
-  `call_active` int(11) NOT NULL DEFAULT '1' COMMENT '0 inactive. 1 enable'
+  `number` varchar(20) NOT NULL,
+  `call_status` int(11) NOT NULL DEFAULT '-1' COMMENT '-1 TBD 0 Served. 1 Missed',
+  `call_active` int(11) NOT NULL DEFAULT '1' COMMENT '0 inactive. 1 enable',
+  `token_date` date NOT NULL,
+  `token_time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `call_data`
+--
+
+INSERT INTO `call_data` (`id`, `user`, `counter`, `department`, `number`, `call_status`, `call_active`, `token_date`, `token_time`) VALUES
+(25, 1, 1, 5, '13', 0, 1, '0000-00-00', '00:00:00'),
+(26, 1, 1, 5, '14', 0, 1, '0000-00-00', '00:00:00'),
+(27, 0, 0, 5, '16', -1, 1, '2018-08-19', '01:08:51'),
+(28, 1, 1, 5, '17', 0, 1, '2018-08-19', '01:08:16'),
+(29, 1, 1, 5, '18', 1, 1, '2018-08-19', '01:08:38');
 
 -- --------------------------------------------------------
 
@@ -64,6 +79,13 @@ CREATE TABLE `counter` (
   `counter_status` int(30) NOT NULL DEFAULT '0' COMMENT '0 Default. 1 Delete'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `counter`
+--
+
+INSERT INTO `counter` (`id`, `counter_name`, `counter_status`) VALUES
+(1, 'Counter 411', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -75,8 +97,16 @@ CREATE TABLE `department` (
   `department_name` varchar(500) NOT NULL,
   `department_label` varchar(500) NOT NULL,
   `today_start` int(30) NOT NULL,
+  `next_entry` int(11) NOT NULL,
   `department_active` int(11) NOT NULL DEFAULT '1' COMMENT '0 inactive. 1 enable'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `department`
+--
+
+INSERT INTO `department` (`id`, `department_name`, `department_label`, `today_start`, `next_entry`, `department_active`) VALUES
+(5, 'Dept 1', 'DPT1', 1, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -92,6 +122,13 @@ CREATE TABLE `user` (
   `user_password` varchar(50) NOT NULL,
   `user_status` int(11) NOT NULL DEFAULT '1' COMMENT '0-Disable; 1-Enable'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `user_username`, `user_email`, `user_role`, `user_password`, `user_status`) VALUES
+(1, 'Keval', 'bhogayatakb@gmail.com', 0, '12345', 1);
 
 --
 -- Indexes for dumped tables
@@ -135,7 +172,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `call_data`
 --
 ALTER TABLE `call_data`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -147,19 +184,19 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `counter`
 --
 ALTER TABLE `counter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
