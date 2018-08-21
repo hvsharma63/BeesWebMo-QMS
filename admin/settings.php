@@ -159,6 +159,9 @@
             <span class="right" style="color: white;"> <span class="grey-text text-lighten-3">Version</span> 0.0.1</span>
         </div>
     </footer>
+    <!-- ======================= Theme Support =========================== -->
+    <?php include_once 'theme_support.php'; ?>
+    <!-- ======================= End Theme Support =========================== -->
 
      <!-- ======================= JQuery libs =========================== -->
      <?php include_once 'footer_script.php'; ?>
