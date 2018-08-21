@@ -2,7 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
-	
+	$depts=$dept->all_deptdata();
+
 ?>
 
 <!doctype html>
@@ -13,8 +14,6 @@
 
 	<?php include_once 'head.php'; ?>
 	
-    
-
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     
@@ -37,7 +36,7 @@
             <h2>Department</h2>
             <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
                     
-                <a href="#">
+                <a href="department-add.php">
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><i class="uk-icon-small uk-icon-plus md-color-green-800"></i></div>
@@ -78,18 +77,32 @@
                         </tfoot>
 
                         <tbody>
+                            <?php
+                                $i=1;
+                                foreach($depts as $current_dept)
+                                {
+                                    $dep_id = $current_dept->id;
+                                    $dep_name = $current_dept->department_name;
+                                    $dep_label = $current_dept->department_label;
+                                    $dep_start = $current_dept->today_start;
+                            ?>
                             <tr>
-                                <td><!-- <?php echo $i; ?> -->1</td>
-                                <td>Bank </td>
-                                <td>NUll</td>  
-                                <td>Null</td>  
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $dep_name; ?></td>
+                                <td><?php echo $dep_label; ?></td>  
+                                <td><?php echo $dep_start; ?></td>  
                                 <td>
                                     <!-- <div class="hidden"><?php echo $users_list_result->user_is_active ?></div> -->
-                                    <a   href='#'><i class="md-icon material-icons md-color-blue-gray-500">remove_red_eye</i></a>
-                                    <span  onclick="" data-uk-tooltip="{pos:'top'}" title='Delete User'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
+                                    <a href='department-edit.php?editid=<?php echo $dep_id; ?>'><i class="md-icon material-icons md-color-blue-gray-500">edit</i></a>
+                                    <a href="department-delete.php?deleteid=<?php echo $dep_id; ?>"><span  onclick="return confirm('Are you sure you want to Delete Department?')" data-uk-tooltip="{pos:'top'}" title='Delete User'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span></a>
                                 </td>
                             </tr>         
-                        
+                            <?php
+                                $i++;
+                                }
+                               
+                            ?>
+
                         </tbody>
                     </table>
                 </div>

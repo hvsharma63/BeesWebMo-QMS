@@ -236,3 +236,13 @@ $window.load(function() {
             });
 	});
 </script>
+
+
+<!-- Use in department_add.php for CANCEL functionality -->
+<script>
+    function ClearFields() {
+        document.getElementById("dep_name").value = "";
+        document.getElementById("dep_letter").value = "";
+        document.getElementById("dep_start").value = "";
+    }    
+</script>
