@@ -3,7 +3,7 @@ if( ! session_id() )
 	@ session_start();
 	
 if( ! defined('SITE_URL') ) 	
-	define('SITE_URL', 'http://localhost/BeesWebMo-QMS/');	// Write URL without /
+	define('SITE_URL', 'http://localhost/BeesWebMo-QMS');	// Write URL without /
 	
 if( ! defined('SITE_DIR') )
 	define('SITE_DIR', __DIR__);		// This will return path without /
@@ -45,5 +45,17 @@ $error_code = array();
 $wpdb	= new wpdb(DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
 
 require_once SITE_DIR . "/load.php";	// Load all classes and functions
+
+if(!isset($_SESSION['NOTIFICATION_TITLE'])){
+	$_SESSION['NOTIFICATION_TITLE']="Danspark";
+}
+if(!isset($_SESSION['NOTIFICATION_SIZE'])){
+	$_SESSION['NOTIFICATION_SIZE']="34px";
+}
+if(!isset($_SESSION['NOTIFICATION_COLOR'])){
+	$_SESSION['NOTIFICATION_TITLE']="Danspark";
+}
+
+
 
 do_action( "init" );	

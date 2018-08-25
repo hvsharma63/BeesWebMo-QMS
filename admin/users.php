@@ -109,9 +109,6 @@
     </div>
 
    
-    <!-- ======================= Theme Support =========================== -->
-    <?php include_once 'theme_support.php'; ?>
-    <!-- ======================= End Theme Support =========================== -->
 
      <!-- ======================= JQuery libs =========================== -->
      <?php include_once 'footer_script.php'; ?>

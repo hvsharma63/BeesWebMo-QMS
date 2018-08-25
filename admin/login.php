@@ -1,3 +1,29 @@
+<?php
+    include_once '../config.php';
+
+    /*If user is already logged in*/
+    if( isset($_SESSION) && isset($_SESSION['user_id']) && isset($_SESSION['user_role']) ) {
+        @ header("Location: index.php");
+        exit;
+    }
+
+    if( isset($_POST['submit_login']) ){
+        //$_POST = array_map("TrimData", $_POST );
+        //var_dump($_POST);
+        $username = $_POST['login_username'];
+        $password = $_POST['login_password'];
+
+        $login_success = $user->role_login( $username, $password );
+
+        if( $login_success ){
+           @ header("Location: index.php");
+            exit;
+        }
+
+
+    }
+?>
+
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
@@ -38,14 +64,14 @@
                         <h5>ENTER THE CREDENTIALS TO LOG IN</h5>
                     </div>
                 </div>
-                <form>
+                <form method="POST">
                     <div class="uk-form-row">
                         <label for="login_username">Username</label>
                         <input class="md-input" type="text" id="login_username" name="login_username" />
                     </div>
                     <div class="uk-form-row">
                         <label for="login_password">Password</label>
-                        <input class="md-input" type="password" id="login_password" name="login_username" />
+                        <input class="md-input" type="password" id="login_password" name="login_password" />
                     </div>
                     <div class="uk-form-row">
                         <span class="icheck-inline">
@@ -54,11 +80,10 @@
                         </span>    
                     </div>
                     <div class="uk-margin-medium-top">
-                        <a href="index-2.html" class="md-btn md-btn-primary md-btn-block md-btn-large">Sign In</a>
+                        <input type="submit" name="submit_login" class="md-btn md-btn-primary md-btn-block md-btn-large" value="Sign In" />
                     </div>
                     <div class="uk-margin-top">
                         <a href="#" id="login_help_show" class="uk-float-right">Forgot Password?</a>
-                        
                     </div>
                 </form>
             </div>

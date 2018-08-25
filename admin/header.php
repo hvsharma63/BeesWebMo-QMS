@@ -34,7 +34,7 @@
                         <div class="uk-dropdown uk-dropdown-small">
                             <ul class="uk-nav js-uk-prevent">
                                 <li><a href="page_settings.html"><span><i class="material-icons">settings</i></span> Settings</a></li>
-                                <li><a href="login.html"><span><i class="material-icons">call_missed_outgoing</i></span> Logout</a></li>
+                                <li><a href="logout.php"><span><i class="material-icons">call_missed_outgoing</i></span> Logout</a></li>
                             </ul>
                         </div>
                     </li>

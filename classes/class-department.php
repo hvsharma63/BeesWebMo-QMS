@@ -41,5 +41,6 @@ class Department{
 		global $wpdb;
 		$wpdb->query($wpdb->prepare("INSERT INTO `department` (`department_name`, `department_label`) VALUES ('%s','%s')",$department_name, $department_latter));
 	}
+
 }
 ?>
