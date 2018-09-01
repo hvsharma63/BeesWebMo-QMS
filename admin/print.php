@@ -16,7 +16,9 @@
             <span style="float:left"><?php echo date("d/m/y"); ?></span><span style="float:right"><?php echo date("h:m:s a"); ?></span>
         </div>
         <script>
-            window.onload = function(){window.print();}
+            window.onload = function(){
+                window.print();
+            }
         </script>
     <?php
 ?>

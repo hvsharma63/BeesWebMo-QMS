@@ -10,9 +10,6 @@
         $_SESSION['NOTIFICATION_TITLE']=$_POST['notification_text'];
         $_SESSION['NOTIFICATION_SIZE']=$_POST['notification_size'];
         $_SESSION['NOTIFICATION_COLOR']=$_POST['notification_color'];
-        echo "<script>alert('".$_SESSION['NOTIFICATION_TITLE']."');</script>";
-        echo "<script>alert('".$_SESSION['NOTIFICATION_SIZE']."');</script>";
-        echo "<script>alert('".$_SESSION['NOTIFICATION_COLOR']."');</script>";
     }
 
 ?>
@@ -56,7 +53,7 @@
 
 
                         <?php
-                    } else{
+                    } else {
                         ?>
                             <!-- statistics (small charts) -->
                             <div>
@@ -64,7 +61,8 @@
                                     <div class="md-card-content">
                                         <div class="uk-float-right uk-margin-top uk-margin-small-right"><span><a href="#">More Info</a></span></div>
                                         <span class="uk-text-muted uk-text-small">Today Queue</span>
-                                        <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript>12456</noscript></span></h2>
+                                        <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $call->today_queue(); ?></noscript></span></h2>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +71,7 @@
                                     <div class="md-card-content">
                                         <div class="uk-float-right uk-margin-top uk-margin-small-right"><span><a href="#">More Info</a></span></div>
                                         <span class="uk-text-muted uk-text-small">Today Missed</span>
-                                        <h2 class="uk-margin-remove">$<span class="countUpMe">0<noscript>142384</noscript></span></h2>
+                                        <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $call->today_missed(); ?></noscript></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +80,7 @@
                                     <div class="md-card-content">
                                         <div class="uk-float-right uk-margin-top uk-margin-small-right"><span><a href="#">More Info</a></span></div>
                                         <span class="uk-text-muted uk-text-small">Today Served</span>
-                                        <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript>64</noscript></span>%</h2>
+                                        <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $call->today_served(); ?></noscript></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +89,7 @@
                                     <div class="md-card-content">
                                         <div class="uk-float-right uk-margin-top uk-margin-small-right"><span><a href="#">More Info</a></span></div>
                                         <span class="uk-text-muted uk-text-small">Over Time</span>
-                                        <h2 class="uk-margin-remove" id="peity_live_text">46</h2>
+                                        <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $call->today_served(); ?></noscript></span></h2>
                                     </div>
                                 </div>
                             </div>

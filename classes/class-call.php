@@ -21,7 +21,9 @@ class Call{
 	{
 		global $wpdb;
 		$min_token=$wpdb->get_var($wpdb->prepare("SELECT MIN(token_time) FROM `call_data` WHERE `department`=%d AND `counter`=%d",$dept,0));
+
 		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d WHERE `token_time`=%s",$user,$counter,0,$min_token));
+
 		header('Location: call.php');
 	}
 	
@@ -37,6 +39,21 @@ class Call{
 	public function all_calldata(){
 		global $wpdb;
 		return $wpdb->get_results($wpdb->prepare("SELECT * FROM `call_data` WHERE call_active=%d",1));
+	}
+
+	public function today_queue(){
+		global $wpdb;
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s",date('Y-m-d')));
+	}
+
+	public function today_missed(){
+		global $wpdb;
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s AND `call_status`=%d",date('Y-m-d'),1));
+	}
+
+	public function today_served(){
+		global $wpdb;
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s AND `call_status`=%d",date('Y-m-d'),0));
 	}
 }
 

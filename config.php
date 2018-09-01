@@ -56,6 +56,4 @@ if(!isset($_SESSION['NOTIFICATION_COLOR'])){
 	$_SESSION['NOTIFICATION_TITLE']="Danspark";
 }
 
-
-
 do_action( "init" );	
