@@ -70,7 +70,7 @@
                                             foreach($users as $current_user)
                                             {
                                         ?>
-                                        <option value="<?php echo $current_user->id;?>"><?php echo $current_user->user_username;?></option>
+                                        <option value="<?php echo $current_user->id;?>"><?php echo $current_user->user_name;?></option>
                                         <!-- <option value="a1">Item A1</option>
                                         <option value="b1">Item B1</option>
                                         <option value="c1">Item C1</option>    -->

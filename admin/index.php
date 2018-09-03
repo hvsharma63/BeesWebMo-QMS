@@ -6,6 +6,7 @@
 
     /* Get currenlty logged in user all details */
     $user_getinfo = $user->get_userinfo();
+    $cnts=$cnt->all_cntdata();
 
     if(isset($_POST['notification_set'])){
         $_SESSION['NOTIFICATION_TITLE']=$_POST['notification_text'];
@@ -108,7 +109,7 @@
             </div>
             <!-- ******************** Today Overtime Ends ******************** -->
 
-        </div>
+        </div>  
 
         <!-- ******************** Graph Starts ******************** -->
         <div class="uk-grid" data-uk-grid-margin>
@@ -119,7 +120,7 @@
                         <div>
                             <h3>Queue Details</h3>
                         </div>
-                        <div id="mg_chart_confidence_band" class="mGraph"></div>
+                        <div class="queuevsserved"></div>
                     </div>
                 </div>
             </div>
@@ -130,7 +131,9 @@
                         <div>
                             <h3>Today Vs Yesterday</h3>
                         </div>
-                        <div id="ct-chart" class="chartist"></div>
+                        <div class="todayvsyseterday">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,5 +214,108 @@
     <?php include_once 'footer_script.php'; ?>
     <!-- ******************** End JQuery libs ******************** -->
      
+
+    <script>
+        var data = {
+  labels: [
+            <?php  
+
+            foreach($cnts as $current_cnt){
+                echo "'".$current_cnt->counter_name."'";
+                echo ",";
+            }
+
+            ?>
+          ],
+  series: [
+            [
+
+            <?php  
+
+            foreach($cnts as $current_cnt){
+                echo $cnt->yesterday_served($current_cnt->id);
+                echo ",";
+            }
+
+            ?>
+
+            ],
+            [
+
+            <?php  
+
+            foreach($cnts as $current_cnt){
+                echo $cnt->today_served($current_cnt->id);
+                echo ",";
+            }
+
+            ?>
+
+
+
+
+            ]
+          ]
+};
+
+var options = {
+  seriesBarDistance: 10
+};
+
+var responsiveOptions = [
+  ['screen and (max-width: 640px)', {
+    seriesBarDistance: 5,
+    axisX: {
+      labelInterpolationFnc: function (value) {
+        return value[0];
+      }
+    }
+  }]
+];
+
+new Chartist.Bar('.todayvsyseterday', data, options, responsiveOptions);
+    </script>
+
+<script type="text/javascript">
+        var data = {
+  labels: [
+
+           'Served','Queue'
+
+        ],
+  series: [
+
+             <?php  
+
+                echo $call->today_served().",".$call->today_queue();
+
+            ?>
+
+            ]
+};
+
+var options = {
+  labelInterpolationFnc: function(value) {
+    return value[0]
+  }
+};
+
+var responsiveOptions = [
+  ['screen and (min-width: 640px)', {
+    chartPadding: 30,
+    labelOffset: 100,
+    labelDirection: 'explode',
+    labelInterpolationFnc: function(value) {
+      return value;
+    }
+  }],
+  ['screen and (min-width: 1024px)', {
+    labelOffset: 80,
+    chartPadding: 20
+  }]
+];
+
+new Chartist.Pie('.queuevsserved', data, options, responsiveOptions);
+    </script>
 </body>
 </html>

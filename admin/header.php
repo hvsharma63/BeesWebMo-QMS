@@ -21,7 +21,7 @@
                             <ul class="uk-nav js-uk-prevent">
                                 <li><a style="pointer-events: none;cursor: default;text-decoration: none;color: black;">LINKS</a></li><hr>
                                 <li><a href="page_settings.html">Display URL</a></li>
-                                <li><a href="login.html">Issue Token URL</a></li>
+                                <li><a href="issue_token.php">Issue Token URL</a></li>
                             </ul>
                         </div>
                     </li>

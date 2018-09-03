@@ -38,5 +38,15 @@ class Counter{
 		global $wpdb;
 		$wpdb->query($wpdb->prepare("DELETE FROM `counter` WHERE id=%d",$id));
 	}
+
+	public function today_served($counter){
+		global $wpdb;
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s AND `call_status`=%d AND `counter`=%d",date('Y-m-d'),0,$counter));
+	}
+
+	public function yesterday_served($counter){
+		global $wpdb;
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s AND `call_status`=%d AND `counter`=%d",date('Y-m-d',strtotime("-1 days")),0,$counter));
+	}
 }
 ?>

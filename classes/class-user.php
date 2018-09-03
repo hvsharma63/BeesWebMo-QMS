@@ -131,7 +131,7 @@
 		public function logout() {
 		
 	        //session_destroy();        
-			session_unset();
+			
 			unset( $_SESSION['user_id'] );
 			unset( $_SESSION['user_role'] );		
 

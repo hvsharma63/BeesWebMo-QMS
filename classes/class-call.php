@@ -1,6 +1,7 @@
 <?php
 
 class Call{
+
 	function __construct()
 	{
 
@@ -32,7 +33,9 @@ class Call{
 	{
 		global $wpdb;
 		$min_token=$wpdb->get_var($wpdb->prepare("SELECT MIN(token_time) FROM `call_data` WHERE `department`=%d AND `counter`=%d",$dept,0));
+
 		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d WHERE `token_time`=%s",$user,$counter,1,$min_token));
+		
 		header('Location: call.php');
 	}
 
