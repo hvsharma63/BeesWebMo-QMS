@@ -2,6 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+
+    $data = $dept->all_deptdata();
 	
 ?>
 
@@ -41,26 +43,32 @@
                     <div class="uk-grid" data-uk-grid-margin="">
                         <div class="uk-width-medium-1-4">
                             <label>Date</label>
-                            <input type="text"  name="tipster_dob" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
+                            <input type="text"  id="start_dt" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
                         </div>
                         <div class="uk-width-medium-1-4">
                             <label>Date</label>
-                            <input type="text"  name="tipster_dob" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
+                            <input type="text"  id="last_dt" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
                         </div>
                         <div class="uk-width-medium-1-4">
                             <select id="select_demo_4" data-md-selectize>
-                                <option value="">Select User</option>
-                                <option value="a1">Item A1</option>
-                                <option value="b1">Item B1</option>
-                                <option value="c1">Item C1</option>   
+                                
+                                <option value="0">All Department</option>
+                                <?php foreach ($data as $dept_nm) { ?>
+                                    <option value="<?php echo $dept_nm->id; ?>"><?php echo $dept_nm->department_name; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div class="uk-width-medium-1-4 uk-text-center">
-                            <a href="#" class="md-btn md-btn-primary uk-margin-small-top">GO</a>
+                            <a href="#" class="md-btn md-btn-primary uk-margin-small-top" id="fetch_data">GO</a>
                         </div>
                     </div>
                 </div>
             </div>
+            
+                <div class="md-card" id="viewData">
+                    
+                </div>
+            
         </div>
 
          <footer>
@@ -75,5 +83,22 @@
       <!-- ======================= JQuery libs =========================== -->
      <?php include_once 'footer_script.php'; ?>
      <!-- ======================= End JQuery libs =========================== -->
+     <script type="text/javascript">
+        $(document).ready(function(){
+            $("#fetch_data").on('click', function(){
+                var user_id = $("#select_demo_4").val();
+                var start_dt = $("#start_dt").val();
+                var last_dt = $("#last_dt").val();
+                $.ajax({
+                    url: 'month_report_table.php',
+                    type: 'POST',
+                    data: ({ id: user_id, start_dt: start_dt, last_dt: last_dt }),
+                    success: function(data){
+                        $("#viewData").html(data);
+                    }
+                });
+            }); 
+        });
+     </script>
 </body>
 </html>

@@ -19,17 +19,15 @@ function date2mysql( $date = "", $is_only_date = false ) {
 	if ( $date == "" && $is_only_date ) {
 		return "0000-00-00";
 	} else if ( $date == "" && ! $is_only_date ) {
-		return "0000-00-00 00:00:00";	
+		return "0000-00-00";	
 	}
 	
 	$date	= str_replace( "/", "-", $date );
 	$date	= str_replace( ".", "-", $date );
 	
-	if ( $is_only_date ) {
+	
 		return date( "Y-m-d", strtotime( $date ) );
-	} else {
-		return date( "Y-m-d H:i:s", strtotime( $date ) );
-	}
+	
 }
 
 

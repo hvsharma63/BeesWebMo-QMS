@@ -12,6 +12,20 @@ class Call{
 		return $wpdb->get_results($wpdb->prepare("SELECT * FROM `call_data` WHERE call_active=%d AND id=%d",1,$id));
 	}
 
+	public function callSelectedData($id, $date){
+		global $wpdb;
+		return $wpdb->get_results($wpdb->prepare("SELECT * FROM `call_data` WHERE call_active=%d AND user=%d AND token_date = %s",1,$id,$date));
+	}
+
+	public function callMonthData($id, $sdate, $ldate){
+		global $wpdb;
+		if($id!=0){
+			return $wpdb->get_results($wpdb->prepare("SELECT * FROM `call_data` WHERE call_active=%d AND department = %d AND token_date between %s and %s ",1,$id,$sdate,$ldate));
+		}else{
+			return $wpdb->get_results($wpdb->prepare("SELECT * FROM `call_data` WHERE call_active=%d AND token_date between %s and %s ",1,$sdate,$ldate));
+		}
+	}
+
 	public function call_entry($dept,$number,$date,$time)
 	{
 		global $wpdb;
@@ -23,7 +37,7 @@ class Call{
 		global $wpdb;
 		$min_token=$wpdb->get_var($wpdb->prepare("SELECT MIN(token_time) FROM `call_data` WHERE `department`=%d AND `counter`=%d",$dept,0));
 
-		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d WHERE `token_time`=%s",$user,$counter,0,$min_token));
+		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d,`called_time` = %s,`called_date` = %s WHERE `token_time`=%s",$user,$counter,0,date('h:m:s'),date('Y-m-d'),$min_token));
 
 		header('Location: call.php');
 	}
@@ -34,7 +48,7 @@ class Call{
 		global $wpdb;
 		$min_token=$wpdb->get_var($wpdb->prepare("SELECT MIN(token_time) FROM `call_data` WHERE `department`=%d AND `counter`=%d",$dept,0));
 
-		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d WHERE `token_time`=%s",$user,$counter,1,$min_token));
+		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d,`called_time` = %s,`called_date` = %s WHERE `token_time`=%s",$user,$counter,1,date('h:m:s'),date('Y-m-d'),$min_token));
 		
 		header('Location: call.php');
 	}
@@ -57,6 +71,11 @@ class Call{
 	public function today_served(){
 		global $wpdb;
 		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s AND `call_status`=%d",date('Y-m-d'),0));
+	}
+
+	public function queueData(){
+		global $wpdb;
+		return $wpdb->get_results($wpdb->prepare("SELECT * FROM `call_data` WHERE call_active=%d",1));
 	}
 }
 

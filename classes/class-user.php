@@ -15,13 +15,56 @@
 		public function userdata($id)
 		{
 			global $wpdb;
-			return $wpdb->get_results($wpdb->prepare("SELECT * FROM `user` WHERE id=%d",$id));
+			return $wpdb->get_row($wpdb->prepare("SELECT * FROM `user` WHERE id=%d",$id));
 		}
 
 		public function all_userdata()
 		{
 			global $wpdb;
 			return $wpdb->get_results("SELECT * FROM `user`");
+		}
+
+		public function update_detail($username,$user_name,$email,$password){
+			global $wpdb;
+			$data = array(
+				'user_name' => $username,
+				'user_username' => $user_name,
+				'user_email' => $email,
+				'user_password' => $password
+			);
+
+			$wpdb->update( 'user' , $data , array( 'id' => $_SESSION['user_id'] ) );
+
+			return true;
+		}
+
+		public function companyData()
+		{
+			global $wpdb;
+			return $wpdb->get_row("SELECT * FROM company");
+		}
+		public function update_company_detail($cname,$clogo,$cemail,$caddress,$cphone,$clocation){
+			global $wpdb;
+
+			$count = $wpdb->get_var("SELECT COUNT(*) FROM `company`");
+
+			$data = array(
+				'company_name'=>$cname,
+				'company_logo'=>$clogo,
+				'company_phone'=>$cphone,
+				'company_email'=>$cemail,
+				'company_address'=>$caddress,
+				'company_location'=>$clocation,
+			);
+
+			if($count == 0){
+				$wpdb->insert( 'company' , $data );
+				return true;
+			}
+			else{
+				$wpdb->update( 'company' , $data , array( 'id' => 1 ) );
+				return true;
+			}
 		}
 
 		public function role_login( $username, $password ){

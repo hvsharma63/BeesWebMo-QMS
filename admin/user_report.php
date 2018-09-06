@@ -47,24 +47,21 @@
                                 {
                                     ?>
                                     <option value="<?php echo $current_user->id;?>"><?php echo $current_user->user_name;?></option>
-                                    <!-- <option value="a1">Item A1</option>
-                                    <option value="b1">Item B1</option>
-                                    <option value="c1">Item C1</option>    -->
                                     <?php } ?>   
                             </select>
                         </div>
                         <div class="uk-width-medium-1-3">
                            <label>Date</label>
-                            <input type="text"  name="tipster_dob" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
+                            <input type="text" id="report_dt" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
                         </div>
                         <div class="uk-width-medium-1-3 uk-text-center">
-                            <a href="#" class="md-btn md-btn-primary uk-margin-small-top">GO</a>
+                            <a href="#" class="md-btn md-btn-primary uk-margin-small-top" id="viewReport">GO</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div id="viewTable"></div>
          <footer>
             <div class="container" style="background-color: #368f8b; height: 45px;">
                 <span style="color: white;">Powered by BeesWebmo. All rights reserved.</span>
@@ -77,5 +74,21 @@
       <!-- ======================= JQuery libs =========================== -->
      <?php include_once 'footer_script.php'; ?>
      <!-- ======================= End JQuery libs =========================== -->
+     <script type="text/javascript">
+        $(document).ready(function(){
+            $("#viewReport").on('click', function(){
+                var user_id = $("#select_demo_4").val();
+                var date = $("#report_dt").val();
+                $.ajax({
+                    url: 'report_table.php',
+                    type: 'POST',
+                    data: ({ id: user_id, date: date }),
+                    success: function(data){
+                        $("#viewTable").html(data);
+                    }
+                });
+            }); 
+        });
+     </script>
 </body>
 </html>

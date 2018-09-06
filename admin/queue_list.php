@@ -2,6 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+
+    $data = $call->queueData();
 	
 ?>
 
@@ -42,8 +44,6 @@
                     <div class="uk-grid" data-uk-grid-margin>
                         <div class="uk-input-group uk-width-medium-1-4">
                             <h4 class="heading_a uk-margin-bottom">Report</h4>
-                            <label for="user_edit_position_control">Date</label>
-                            <input type="text"  name="tipster_dob" class="md-input" data-uk-datepicker="{format:'DD-MM-YYYY'}" required>
                         </div>    
                     </div>   
                     <div class="uk-margin-medium-bottom">
@@ -72,7 +72,25 @@
                         </tfoot>
 
                         <tbody>
-                            
+                            <?php 
+                            $x = 1;
+                            foreach ($data as $key) {
+                            ?>
+                            <tr>
+                                <td><?php echo $x; ?></td>
+                                <td><?php echo $dept->deptdata($key->department)->department_name; ?></td>
+                                <td><?php echo $dept->deptdata($key->department)->department_label." - ". $key->number; ?></td>
+                                <td>
+                                    <?php if( $key->call_status == -1 ){
+                                        echo "No";
+                                    }else { echo "Yes"; }
+
+                                    ?>
+                                </td>
+                                <td> <?php echo $user->userdata($key->user)->user_name; ?> </td>
+                                <td><?php echo $cnt->cntdata($key->counter)->counter_name; ?></td>
+                            </tr>
+                            <?php $x++; } ?>
                         </tbody>
                     </table>
                 </div>
