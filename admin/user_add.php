@@ -65,7 +65,7 @@
 	                                </div>
 	                                <div class="uk-width-medium-1-1">
 	                                    <span for="user_edit_position_control">Role</span>
-	                                    <input type="number" name="user_role" class="md-input" placeholder="Staff" value="1" readonly>
+	                                    <input type="number" name="user_role" class="md-input" placeholder="Staff" value="Staff" readonly>
 	                                </div>
 	                                <div class="uk-width-medium-1-1">
 	                                    <label for="user_edit_position_control">Password</label>

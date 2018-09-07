@@ -130,7 +130,7 @@
                                 <th>Number</th>
                                 <th>Called</th>
                                 <th>Counter</th>
-                                <th>Recall</th>
+                               
                             </tr>
                             </thead>
 
@@ -141,7 +141,7 @@
                                 <th>Number</th>
                                 <th>Called</th>
                                 <th>Counter</th>
-                                <th>Recall</th>
+                                
                             </tr>
                             </tfoot>
 
@@ -156,7 +156,7 @@
                                 <td><?php echo $dept->deptdata($current_call->department)->department_name."-".$current_call->number; ?></td>
                                 <td><?php if($current_call->call_status==0){echo "Yes";}else{echo "No";} ?></td>
                                 <td><?php if($current_call->counter==0){echo "NIL";}else{echo $cnt->cntdata($current_call->counter)->counter_name;} ?></td>
-                                <td><button>Recall</button></td>
+                                
                             </tr>
                             <?php
                             $x++;
@@ -177,7 +177,9 @@
                                     foreach($depts as $current_dept){ 
                                 ?>
                                 <div class="uk-width-large-1-3">
-                                    <a class="md-btn md-btn-primary  md-btn-wave-light waves-effect waves-button waves-light" href="print.php?dept=<?php echo $current_dept->id;?>"><?php echo $current_dept->department_name;?></a>
+                                    <form action="print.php" method="POST">
+                                        <button type="submit" class="md-btn md-btn-primary  md-btn-wave-light waves-effect waves-button waves-light" name="dept" value="<?php echo $current_dept->id;?>"><?php echo $current_dept->department_name;?></button>
+                                    </form>
                                 </div>
                                     <?php } ?>
                             </div>

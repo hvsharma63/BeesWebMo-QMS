@@ -100,16 +100,19 @@
             </div>
 
         </div>
-         
-         <footer>
-            <div class="container" style="background-color: #368f8b; height: 45px;">
-                <span style="color: white;">Powered by BeesWebmo. All rights reserved.</span>
-                <span class="right" style="color: white;"> <span class="grey-text text-lighten-3">Version</span> 0.0.1</span>
-            </div>
-        </footer>
     </div>
 
+     <footer>
+            <div class="container" style="background-color: #368f8b; height: 45px;">
+                <h6 style="color: white;">Powered by BeesWebmo. All rights reserved.Version 0.0.1</h6>
+                <span class="right" style="color: white;"> <span class="grey-text text-lighten-3">Version</span> 0.0.1</span>
+            </div>
+    </footer>
+
    
+    <!-- ======================= Color Switcher =========================== -->
+    <?php include_once 'colorswitcher.php'; ?>
+    <!-- ======================= Color Switcher =========================== -->
 
      <!-- ======================= JQuery libs =========================== -->
      <?php include_once 'footer_script.php'; ?>

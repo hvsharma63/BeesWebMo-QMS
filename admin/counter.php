@@ -44,7 +44,7 @@
             </div>
         <div id="page_content_inner">
             <h2>Counter</h2>
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium" data-uk-grid-margin>
                 <a href="counter-create.php">
                     <div class="md-card">
                         <div class="md-card-content">
@@ -83,7 +83,7 @@
                             <tbody>
                                 <tr>
                                 <?php
-                                    $i = 0;
+                                    $i = 1;
                                     foreach($counters as $counter){
                                 ?>  
                                     <td><?php echo $i; ?></td>
@@ -93,7 +93,7 @@
                                             <span data-uk-tooltip="{pos:'top'}" title='Edit Counter'><button type="submit" name="value" class="md-icon material-icons md-color-blue-gray-500" value="<?php echo $counter->id; ?>">edit</button></span>
                                         </form>
                                         <form method="post" style="display:inline-block;">
-                                            <span data-uk-tooltip="{pos:'top'}" title='Delete Counter'><button type="submit" value="<?php echo $counter->id; ?>" class="md-icon material-icons md-color-red-500" name="delete">delete_forever</button></span>
+                                           <span  onclick="return confirm_counter_delete(<?php echo $counter->id; ?>);" data-uk-tooltip="{pos:'top'}" title='Delete Department'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
                                         </form>                     
                                     </td>
                                 </tr>
@@ -123,9 +123,32 @@
     </div>
 
 
+     <!-- ======================= Color Switcher =========================== -->
+     <?php include_once 'colorswitcher.php'; ?>
+     <!-- ======================= Color Switcher =========================== -->
+
     <!-- ======================= JQuery libs =========================== -->
     <?php include_once 'footer_script.php'; ?>
     <!-- ======================= End JQuery libs =========================== -->
 
 </body>
 </html>
+
+<!-- MODAL FOR DELETE COUNTER -->
+<script type="text/javascript">
+    function confirm_counter_delete( delete_counter_id ){                 
+
+    UIkit.modal.confirm(
+        'You will not be able to recover this Department!', 
+        function(){ 
+            $.post(ajax_url, { action: 'delete_counter', id: delete_counter_id }, function ( result ) {          
+                
+                modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Counter has been deleted.!<br/><img class=\'uk-margin-top\' src=\''+site_url + '/admin/assets/img/spinners/spinner.gif\' alt=\'\'>'); 
+                setTimeout(function () {
+                    modal.hide();   
+                    window.location.href =  ( site_url + '/admin/counter.php' );  
+                }, 3500);
+        });
+    });     
+}
+</script>

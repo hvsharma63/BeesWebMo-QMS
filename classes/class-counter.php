@@ -2,9 +2,9 @@
 
 class Counter{
 
-	function __construct()
-	{
-
+	function __construct(){
+		/*To delete the particluar counter using ajax call*/
+		add_action( 'wp_ajax_delete_counter', array( $this, 'counter_delete' ) );
 	}
 
 	public function cntdata($id)
@@ -48,5 +48,20 @@ class Counter{
 		global $wpdb;
 		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `call_data` WHERE `token_date`=%s AND `call_status`=%d AND `counter`=%d",date('Y-m-d',strtotime("-1 days")),0,$counter));
 	}
+
+	public function counter_delete( $id = '' ) {		
+		
+			if( ! $id && ! $_POST['id'] )
+				return false;
+			
+			global $wpdb;
+			
+			$id  =  isset( $_POST['id'] ) ? $_POST['id'] : $id ;
+
+			$wpdb->query($wpdb->prepare("DELETE FROM `counter` WHERE id=%d",$id));
+			
+			return true;
+   		}
+   	
 }
 ?>

@@ -1,39 +1,25 @@
-<header id="header_main">    
+<header id="header_main" style="margin-left: 0px">    
     <div class="header_main_content">
         <nav class="uk-navbar">
             <!-- main sidebar switch -->
             <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
-                <span class="sSwitchIcon"></span>
-
+                <span><h3 style="color: white">asdsad</h3></span>
             </a>
 
             
             <!-- secondary sidebar switch -->
-            <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
-                <span class="sSwitchIcon"></span>
-            </a>
-            
+           
             <div class="uk-navbar-flip">
                 <ul class="uk-navbar-nav user_actions">
-                    <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
-                        <a href="#" id="" class=""><i class="material-icons md-24 md-light">link</i></a>
-                        <div class="uk-dropdown uk-dropdown-small">
-                            <ul class="uk-nav js-uk-prevent">
-                                <li><a style="pointer-events: none;cursor: default;text-decoration: none;color: white;">LINKS</a></li><hr>
-                                <li><a href="page_settings.html">Display URL</a></li>
-                                <li><a href="issue_token.php">Issue Token URL</a></li>
-                            </ul>
-                        </div>
-                    </li>
                     <li>
                         <a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">&#xE5D0;</i></a>
                     </li>
                             
                     <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
-                        <a href="#" class="user_action_image"><img class="md-user-image" src="assets/img/avatars/user.png" alt=""/></a>
+                        <a href="#" class="user_action_image"><img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/></a>
                         <div class="uk-dropdown uk-dropdown-small">
                             <ul class="uk-nav js-uk-prevent">
-                                <li><a href="settings.php"><span><i class="material-icons">settings</i></span> Settings</a></li>
+                                <li><a href="page_settings.html"><span><i class="material-icons">settings</i></span> Settings</a></li>
                                 <li><a href="logout.php"><span><i class="material-icons">call_missed_outgoing</i></span> Logout</a></li>
                             </ul>
                         </div>

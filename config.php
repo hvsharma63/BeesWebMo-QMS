@@ -3,7 +3,7 @@ if( ! session_id() )
 	@ session_start();
 	
 if( ! defined('SITE_URL') ) 	
-	define('SITE_URL', 'http://localhost/BeesWebMo');	// Write URL without /
+	define('SITE_URL', 'http://localhost/BeesWebMo-QMS');	// Write URL without /
 	
 if( ! defined('SITE_DIR') )
 	define('SITE_DIR', __DIR__);		// This will return path without /

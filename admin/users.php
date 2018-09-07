@@ -102,7 +102,7 @@
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <a   href='<?php echo  SITE_URL; ?>/admin/user_edit.php?id=<?php echo $user_data->id; ?>'   ><i class="md-icon material-icons md-color-blue-gray-500">remove_red_eye</i></a>
+                                                        <a   href='<?php echo  SITE_URL; ?>/admin/user_edit.php?id=<?php echo $user_data->id; ?>'   ><i class="md-icon material-icons md-color-blue-gray-500">edit</i></a>
                                                         
                                                         <span  onclick="return confirm_user_delete(<?php echo $user_data->id ?>);" data-uk-tooltip="{pos:'top'}" title='Delete User'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
                                                     </td>

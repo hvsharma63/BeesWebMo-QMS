@@ -33,8 +33,8 @@
         else if($newCounterName != NULL && $cnt->chkCounterName($newCounterName) == FALSE){
             echo $oldId;
             $cnt->setUpdatedName($oldId,$newCounterName); 
-            session_unset($_SESSION['oldId']);
-            session_unset($_SESSION['editText']);
+            unset($_SESSION['oldId']);
+            unset($_SESSION['editText']);
             header("Location: counter.php");
         }
     }    
@@ -92,15 +92,15 @@
                                 <input type="text" class="md-input" name="counter_name"/>
                             </div>
                             <div class="uk-width-medium-1">
-                                <a class="md-btn md-btn-flat md-btn-flat-warning md-btn-wave" href="counter.php">Back</a>
+                                
                                 <?php
                                     if(isset($_SESSION['editText'])){
                                         if($_SESSION['editText'] == 1){
-                                            echo "<button class='md-btn md-btn-success md-btn-wave-light' name='update' type='submit'>Update</button>";
+                                            echo "<button class='md-btn md-btn-primary md-btn-small md-btn-wave-light' name='update' type='submit'>Update</button>";
                                         }
                                     }
                                     else{
-                                        echo "<button class='md-btn md-btn-success md-btn-wave-light' name='save' type='submit'>Save</button>";
+                                        echo "<button class='md-btn md-btn-primary md-btn-small md-btn-wave-light' name='save' type='submit'>Save</button>";
                                     }
                                 ?>
                                 <?php 

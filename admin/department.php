@@ -2,7 +2,7 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
-	$depts=$dept->all_deptdata();
+	$depts = $dept->all_deptdata();
 
 ?>
 
@@ -34,7 +34,7 @@
         </div>
         <div id="page_content_inner">
             <h2>Department</h2>
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2" data-uk-grid-margin>
                     
                 <a href="department-add.php">
                     <div class="md-card">
@@ -94,7 +94,9 @@
                                 <td>
                                     <!-- <div class="hidden"><?php echo $users_list_result->user_is_active ?></div> -->
                                     <a href='department-edit.php?editid=<?php echo $dep_id; ?>'><i class="md-icon material-icons md-color-blue-gray-500">edit</i></a>
-                                    <a href="department-delete.php?deleteid=<?php echo $dep_id; ?>"><span  onclick="return confirm('Are you sure you want to Delete Department?')" data-uk-tooltip="{pos:'top'}" title='Delete User'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span></a>
+                                    <!-- <a href="department-delete.php?deleteid=<?php echo $dep_id; ?>"><span  onclick="return confirm('Are you sure you want to Delete Department?')" data-uk-tooltip="{pos:'top'}" title='Delete User'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span></a> -->
+
+                                    <span  onclick="return confirm_department_delete(<?php echo $current_dept->id; ?>);" data-uk-tooltip="{pos:'top'}" title='Delete Department'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
                                 </td>
                             </tr>         
                             <?php
@@ -112,19 +114,19 @@
             </div>
 
         </div>
-         
-         <footer>
+    </div>
+
+    <footer>
             <div class="container" style="background-color: #368f8b; height: 45px;">
                 <span style="color: white;">Powered by BeesWebmo. All rights reserved.</span>
                 <span class="right" style="color: white;"> <span class="grey-text text-lighten-3">Version</span> 0.0.1</span>
             </div>
         </footer>
-    </div>
 
    
-    <!-- ======================= Theme Support =========================== -->
-    <?php include_once 'theme_support.php'; ?>
-    <!-- ======================= End Theme Support =========================== -->
+    <!-- ======================= Color Switcher =========================== -->
+     <?php include_once 'colorswitcher.php'; ?>
+     <!-- ======================= Color Switcher =========================== -->
 
     <!-- ======================= JQuery libs =========================== -->
     <?php include_once 'footer_script.php'; ?>
@@ -132,3 +134,21 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+    function confirm_department_delete( delete_department_id ){                 
+
+    UIkit.modal.confirm(
+        'You will not be able to recover this Department!', 
+        function(){ 
+            $.post(ajax_url, { action: 'delete_department', id: delete_department_id }, function ( result ) {          
+                
+                modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Department has been deleted.!<br/><img class=\'uk-margin-top\' src=\''+site_url + '/admin/assets/img/spinners/spinner.gif\' alt=\'\'>'); 
+                setTimeout(function () {
+                    modal.hide();   
+                    window.location.href =  ( site_url + '/admin/department.php' );  
+                }, 3500);
+        });
+    });     
+}
+</script>

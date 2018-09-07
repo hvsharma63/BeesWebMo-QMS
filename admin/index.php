@@ -39,7 +39,7 @@ if(isset($_POST['notification_set'])){
         <div id="page_content_inner">
             <h2>Dashboard</h2>
 
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium "  data-uk-grid-margin>
 
                 <?php
                 if($user_getinfo->user_role == 1){
@@ -146,7 +146,7 @@ if(isset($_POST['notification_set'])){
         ?>
         <!-- Notifications Area -->
 
-        <div class="md-card">
+        <div class="md-card" style="margin-top: 80px;">
             <div class="md-card-content">
                 <div><h3>Notification</h3></div>
                 <div class="uk-grid" data-uk-grid-margin>

@@ -15,56 +15,13 @@
 		public function userdata($id)
 		{
 			global $wpdb;
-			return $wpdb->get_row($wpdb->prepare("SELECT * FROM `user` WHERE id=%d",$id));
+			return $wpdb->get_results($wpdb->prepare("SELECT * FROM `user` WHERE id=%d",$id));
 		}
 
 		public function all_userdata()
 		{
 			global $wpdb;
 			return $wpdb->get_results("SELECT * FROM `user`");
-		}
-
-		public function update_detail($username,$user_name,$email,$password){
-			global $wpdb;
-			$data = array(
-				'user_name' => $username,
-				'user_username' => $user_name,
-				'user_email' => $email,
-				'user_password' => $password
-			);
-
-			$wpdb->update( 'user' , $data , array( 'id' => $_SESSION['user_id'] ) );
-
-			return true;
-		}
-
-		public function companyData()
-		{
-			global $wpdb;
-			return $wpdb->get_row("SELECT * FROM company");
-		}
-		public function update_company_detail($cname,$clogo,$cemail,$caddress,$cphone,$clocation){
-			global $wpdb;
-
-			$count = $wpdb->get_var("SELECT COUNT(*) FROM `company`");
-
-			$data = array(
-				'company_name'=>$cname,
-				'company_logo'=>$clogo,
-				'company_phone'=>$cphone,
-				'company_email'=>$cemail,
-				'company_address'=>$caddress,
-				'company_location'=>$clocation,
-			);
-
-			if($count == 0){
-				$wpdb->insert( 'company' , $data );
-				return true;
-			}
-			else{
-				$wpdb->update( 'company' , $data , array( 'id' => 1 ) );
-				return true;
-			}
 		}
 
 		public function role_login( $username, $password ){
@@ -90,7 +47,7 @@
 				$user_id = $_SESSION['user_id']; 
 				/*$user_role = $_SESSION['user_role']; */
 			}
-			
+				
 			if( ! $user_id )
 				return array();
 				
@@ -110,15 +67,18 @@
 		public function add_user($user_data = ""){
 			global $wpdb;
 
-			$user_data = array(
-				'user_name' => $_POST['user_name'],
-				'user_username' => $_POST['user_username'],
-				'user_email' => $_POST['user_email'],
-				'user_role' => $_POST['user_role'],
-				'user_password' => $_POST['user_password']
-			);
-			$wpdb->insert('user', $user_data);
-			return true;
+			$already=$wpdb->get_row($wpdb->prepare("SELECT * FROM `user` WHERE user_email = %s", $_POST['user_email']));
+			if(!$already){
+				$user_data = array(
+					'user_name' => $_POST['user_name'],
+					'user_username' => $_POST['user_username'],
+					'user_email' => $_POST['user_email'],
+					'user_role' => 1,
+					'user_password' => $_POST['user_password']
+				);
+				$wpdb->insert('user', $user_data);
+				return true;
+			}
 		}
 
 		public function get_all_user_data( $user_status = 1 ){
@@ -180,5 +140,54 @@
 
 			return true;
 	   	}
+
+	   	public function update_password($new_password, $token){
+			global $wpdb;
+			$user_data = array(						
+				'user_password'	=>  $new_password,				
+			);
+			$done = $wpdb->update( 'user', $user_data, array( 'user_token' => $token ) );  
+			if($done){
+				$user_data = array(						
+					'user_token'	=>  -1,				
+				);
+				$wpdb->update( 'user', $user_data, array( 'user_token' => $token ) );
+				return true;
+			}
+			else{
+				return false;
+			}			
+		}
+
+		public function send_Link($email){
+			global $wpdb;
+			$found = $wpdb->get_row($wpdb->prepare("SELECT * FROM user WHERE user_email = %s", $email));
+			if($found){
+				$length = 32;
+				$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+				$subject = "Password Reset Link";
+				$message = "Reset Password from below given link <br> Link: https://beeswebmo.000webhostapp.com/admin/resetPassword.php?token=".$randomString;
+				$user_data = array(                        
+					'user_token'         => $randomString                       
+				);                     
+				$wpdb->update( 'user', $user_data,  array( 'user_email' => $email ) ); //array is where clause
+				mail($email,$subject,$message);
+				return true;
+			}
+			else{
+				return false;				
+			}
+		}
+
+		public function check_token($token){
+			global $wpdb;
+			$found = $wpdb->get_row($wpdb->prepare("SELECT * FROM user WHERE user_token = %s", $token));
+			if($found){
+				return $found;
+			}
+			else{
+				return false;
+			}
+		}
 	}
 ?>

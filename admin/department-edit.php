@@ -75,8 +75,8 @@
                     </div>
                     
                     <div class="uk-width-medium-1">
-                        <a class="md-btn md-btn-flat md-btn-flat-warning md-btn-wave" href="department.php">Back</a>   
-                           <button class='md-btn md-btn-success md-btn-wave-light' name='update' type='submit'>Update</button> 
+                          
+                        <button class='md-btn md-btn-primary md-btn-small md-btn-wave-light' name='update' type='submit'>Update</button> 
                         <button class='md-btn md-btn-danger md-btn-wave-light' name='cancel' type='submit' onclick="ClearFields()";>
                         Cancel</button>   
                         <!-- ClearField();   function is define in footer_script.php -->
