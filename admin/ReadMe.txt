@@ -2,6 +2,7 @@
 
 ###Changes to be done
 
+
 1. Index page should not be opened until there's an entry of user in database for the first time.-Done
 2. Fix the issue of changing theme, and blinking of it in uncertain times.
 
@@ -34,10 +35,6 @@ Use Case #2:
 3. Delete functionality Not working.
 3. When I cancel "sure, delete" alert, it still deletes the entry.
 
-Users:
 
-I can't fucking believe it, I deleted the user, even though I've not logged in and I'm able to add and remove users
-REDO THE USERS MODULE OR FIX IT!!!!
 
-MAKE SURE SETTINGS DO HAVE ANY KIND OF FUNCTIONALITY, IT'S NOT WORKING.
-add the option to add the company logo as discussed.
+// register page missing
