@@ -2,7 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
-
+    $user->check_userlogin();
+    $user->check_adminlogin();
     /*To get all user list from DB*/
     $get_all_user_data = $user->get_all_user_data();
 	

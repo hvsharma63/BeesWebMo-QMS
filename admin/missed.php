@@ -2,7 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
-	
+    $user->check_userlogin();
+	$user->check_adminlogin();
 ?>
 
 <!doctype html>

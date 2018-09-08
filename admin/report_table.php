@@ -1,5 +1,7 @@
 <?php
 	include_once '../config.php';
+	$user->check_userlogin();
+	$user->check_adminlogin();
 	if(isset($_POST['id'])){
 		$id = $_POST['id'];
 		$date = $_POST['date'];

@@ -1,7 +1,11 @@
 <?php
 	$page_name = 'index';	
 	
+    
+
 	include_once '../config.php';
+    $user->check_userlogin();
+   
 	$users=$user->all_userdata();
     $depts=$dept->all_deptdata();
     $cnts=$cnt->all_cntdata();

@@ -1,7 +1,8 @@
 <?php
 	$page_name = "user_edit";
 	include_once '../config.php';
-
+    $user->check_userlogin();
+    $user->check_adminlogin();
     /*To get data of particular user from DB*/
     $get_selected_user_data = $user->get_selected_user_data( $_GET['id'] );
 

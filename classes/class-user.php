@@ -64,6 +64,16 @@
 			return true;
 		}
 
+		public function check_adminlogin() {
+			if( $_SESSION['user_role'] == 1 ) {
+
+				@ header('Location: '.SITE_URL.'/admin/index.php');
+				exit;
+			}
+			
+			return true;
+		}
+
 		public function add_user($user_data = ""){
 			global $wpdb;
 

@@ -2,7 +2,9 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
-
+	$user->check_userlogin();
+	$user->check_adminlogin();
+	
 	if (isset($_POST['add_user'])) {
 		$_POST = array_map("TrimData", $_POST );
 

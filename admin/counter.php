@@ -2,6 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+    $user->check_userlogin();
+    $user->check_adminlogin();
     $counters = $cnt->all_cntdata();
     
     if(isset($_POST['delete'])){

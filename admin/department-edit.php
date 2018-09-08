@@ -2,6 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+    $user->check_userlogin();
+    $user->check_adminlogin();
     if(isset($_POST['update']))
     {
         $dept->update_deptdata($_POST['dep_id'], $_POST['dep_name'], $_POST['dep_letter']);

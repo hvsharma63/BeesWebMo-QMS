@@ -2,6 +2,9 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+    $user->check_userlogin();
+    $user->check_adminlogin();
+    
 	$depts = $dept->all_deptdata();
 
 ?>

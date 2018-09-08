@@ -1,5 +1,6 @@
 <?php
     include_once '../config.php';
+    $user->check_userlogin();
     $call->call_entry($_POST['dept'],$dept->deptdata($_POST['dept'])->next_entry,date("Y-m-d"),date("h:m:s"));
 
     ?>

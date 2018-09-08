@@ -2,6 +2,8 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+    $user->check_userlogin();
+    $user->check_adminlogin();
     $users=$user->all_userdata();	
 ?>
 

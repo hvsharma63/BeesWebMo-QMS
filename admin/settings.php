@@ -2,6 +2,7 @@
 	$page_name = 'index';	
 	
 	include_once '../config.php';
+    $user->check_userlogin();
 	
 ?>
 
