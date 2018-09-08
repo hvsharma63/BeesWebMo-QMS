@@ -2,7 +2,7 @@
 
 ###Changes to be done
 
-1. Index page should not be opened until there's an entry of user in database for the first time.
+1. Index page should not be opened until there's an entry of user in database for the first time.-Done
 2. Fix the issue of changing theme, and blinking of it in uncertain times.
 
 Department Changes to be done..
