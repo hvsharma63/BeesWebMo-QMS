@@ -112,7 +112,7 @@
 					'user_username' => $_POST['user_username'],
 					'user_email' => $_POST['user_email'],
 					'user_role' => 1,
-					'user_password' => $_POST['user_password']
+					'user_password' => md5($_POST['user_password'])
 				);
 				$wpdb->insert('user', $user_data);
 				return true;
