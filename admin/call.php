@@ -18,13 +18,15 @@
     if(isset($_POST['call_next']))
     {
         $call->call_next($_POST['user'],$_POST['dept'],$_POST['cnt']);
-        //header('Location:call.php');
+        $disp->disp_addtoken($dept->deptdata($_POST['dept'])->department_name." - ".$dept->deptdata($_POST['dept'])->next_entry,
+        $cnt->cntdata($_POST['cnt'])->counter_name);    
     }
 
     if(isset($_POST['reject']))
     {
         $call->reject($_POST['user'],$_POST['dept'],$_POST['cnt']);
-        //header('Location:call.php');
+        $_SESSION['NEXT_TOKEN']=$dept->deptdata($_POST['dept'])->department_name." - ".$dept->deptdata($_POST['dept'])->next_entry;
+        $_SESSION['NEXT_COUNTER']=$cnt->cntdata($_POST['cnt'])->counter_name;
     }
 ?>
 
@@ -195,7 +197,7 @@
     
     <footer>
         <div class="container" style="background-color: #368f8b; height: 45px;">
-            <span style="color: white;">Powered by BeesWebmo. All rights reserved.</span>
+            <span style="color: white; text-align: center;">Powered by BeesWebmo. All rights reserved.</span>
             <span class="right" style="color: white;"> <span class="grey-text text-lighten-3">Version</span> 0.0.1</span>
         </div>
     </footer>

@@ -6,19 +6,23 @@
     $user->check_adminlogin();
     if(isset($_POST['update']))
     {
+        
         $dept->update_deptdata($_POST['dep_id'], $_POST['dep_name'], $_POST['dep_letter']);
         header('Location: department.php');
-    }
-    $id = $_GET['editid'];
 
-    $deptdata = $dept->deptdata($id);
-    
-    foreach($deptdata as $current_dept)
-    {
-        $dep_id = $deptdata->id;
-        $dep_name = $deptdata->department_name;
-        $dep_label = $deptdata->department_label;
     }
+
+    if(isset($_POST['idsubmit']))
+    {
+        $id = $_POST['id'];
+    }    
+        $deptdata = $dept->deptdata($id);
+        foreach($deptdata as $current_dept)
+        {
+            $dep_id = $deptdata->id;
+            $dep_name = $deptdata->department_name;
+            $dep_label = $deptdata->department_label;
+        }
 ?>
 
 <!doctype html>
@@ -65,13 +69,13 @@
                     ?>
                     <div class="uk-grid" data-uk-grid-margin>
                         <div class="uk-width-medium-1">
-                            <label>Enter New Department Name</label>
+                            <label>Old name was '<?php echo $dep_name; ?>'</label>
                             <input type="text" class="md-input" name="dep_name"/>
                         </div>
                     </div>
                     <div class="uk-grid" data-uk-grid-margin>
                         <div class="uk-width-medium-1">
-                            <label>Enter New Letter</label>
+                            <label>Old letter was '<?php echo $dep_label; ?>'</label>
                             <input type="text" class="md-input" name="dep_letter" />
                         </div>
                     </div>

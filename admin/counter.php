@@ -1,5 +1,5 @@
 <?php
-	$page_name = 'index';	
+	$page_name = 'index';
 	
 	include_once '../config.php';
     $user->check_userlogin();
@@ -47,7 +47,7 @@
         <div id="page_content_inner">
             <h2>Counter</h2>
             <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium" data-uk-grid-margin>
-                <a href="counter-create.php">
+                <a href="counter-add.php">
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><i class="uk-icon-small uk-icon-plus md-color-green-800"></i></div>
@@ -91,11 +91,15 @@
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $counter->counter_name; ?></td>
                                     <td>
-                                        <form action="counter-create.php" method="post" style="display:inline-block;">
-                                            <span data-uk-tooltip="{pos:'top'}" title='Edit Counter'><button type="submit" name="value" class="md-icon material-icons md-color-blue-gray-500" value="<?php echo $counter->id; ?>">edit</button></span>
+                                        <form action="counter-edit.php" method="post" style="display:inline-block;">
+                                            <span data-uk-tooltip="{pos:'top'}" title='Edit Counter'>
+                                                <button type="submit" name="value" class="md-icon material-icons md-color-blue-gray-500" value="<?php echo $counter->id; ?>">
+                                                    edit
+                                                </button>
+                                            </span>
                                         </form>
                                         <form method="post" style="display:inline-block;">
-                                           <span  onclick="return confirm_counter_delete(<?php echo $counter->id; ?>);" data-uk-tooltip="{pos:'top'}" title='Delete Department'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
+                                            <span  onclick="return confirm_counter_delete(<?php echo $counter->id; ?>);" data-uk-tooltip="{pos:'top'}" title='Delete Counter'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
                                         </form>                     
                                     </td>
                                 </tr>
@@ -141,11 +145,11 @@
     function confirm_counter_delete( delete_counter_id ){                 
 
     UIkit.modal.confirm(
-        'You will not be able to recover this Department!', 
+        'You will not be able to recover this counter!', 
         function(){ 
             $.post(ajax_url, { action: 'delete_counter', id: delete_counter_id }, function ( result ) {          
                 
-                modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Counter has been deleted.!<br/><img class=\'uk-margin-top\' src=\''+site_url + '/admin/assets/img/spinners/spinner.gif\' alt=\'\'>'); 
+                modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Counter is being deleted.!<br/><img class=\'uk-margin-top\' src=\''+site_url + '/admin/assets/img/spinners/spinner.gif\' alt=\'\'>'); 
                 setTimeout(function () {
                     modal.hide();   
                     window.location.href =  ( site_url + '/admin/counter.php' );  

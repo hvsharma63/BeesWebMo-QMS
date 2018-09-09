@@ -37,9 +37,10 @@ class Call{
 		global $wpdb;
 		$min_token=$wpdb->get_var($wpdb->prepare("SELECT MIN(token_time) FROM `call_data` WHERE `department`=%d AND `counter`=%d",$dept,0));
 
+
 		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d,`called_time` = %s,`called_date` = %s WHERE `token_time`=%s",$user,$counter,0,date('h:m:s'),date('Y-m-d'),$min_token));
 
-		header('Location: call.php');
+		
 	}
 	
 
@@ -50,7 +51,7 @@ class Call{
 
 		$wpdb->query($wpdb->prepare("UPDATE `call_data` SET `user`=%d,`counter`=%d,`call_status`=%d,`called_time` = %s,`called_date` = %s WHERE `token_time`=%s",$user,$counter,1,date('h:m:s'),date('Y-m-d'),$min_token));
 		
-		header('Location: call.php');
+		
 	}
 
 	public function all_calldata(){

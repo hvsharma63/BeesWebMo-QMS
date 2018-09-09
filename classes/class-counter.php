@@ -20,18 +20,30 @@ class Counter{
     }	
     
     public function setCounterName($counterName){
-        global $wpdb;
-        return $wpdb->query($wpdb->prepare("INSERT INTO counter(counter_name) VALUES(%s)",$counterName));
+		global $wpdb;
+		$user_data = array(
+			'counter_name' => $counterName,
+		);
+		$wpdb->insert('counter', $user_data);
+		return true; 
+		// return $wpdb->query($wpdb->prepare("INSERT INTO counter(counter_name) VALUES(%s)",$counterName));
 	}
 	
 	public function chkCounterName($counterName){
 		global $wpdb;
-		return $wpdb->get_var($wpdb->prepare("SELECT Count(*) FROM `counter` WHERE counter_name=%s",$counterName));
+		if($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `counter` WHERE counter_name=%s",$counterName))>0)
+		{
+			return $wpdb->get_row($wpdb->prepare("SELECT * FROM `counter` WHERE counter_name=%s",$counterName))->counter_name;
+		}
+		else{
+			return -1;
+		}
 	}
 
 	public function setUpdatedName($oldId,$newCounterName){
 		global $wpdb;
 		$wpdb->query($wpdb->prepare("UPDATE `counter` SET counter_name=%s WHERE id=%d",$newCounterName,$oldId));
+		return true;
 	}
 	
 	public function deleteCounter($id){

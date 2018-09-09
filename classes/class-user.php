@@ -11,11 +11,39 @@
 			/*To delete the particluar user using ajax call*/
 			add_action( 'wp_ajax_delete_user', array( $this, 'user_delete' ) );
 		}
+		public function checkAccount(){
+			global $wpdb;
+			$num = $wpdb->get_var("SELECT COUNT(*) FROM `user`");
+
+			if($num == 0){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+
+		public function registerUser($name,$username,$password,$email){
+			global $wpdb;
+			/*echo $name." ".$username." ".$email." ".$password;exit();*/
+			
+			$data = array(
+				'user_name' => $name,
+				'user_username' => $username,
+				'user_email' => $email,
+				'user_role' => 0,
+				'user_password' => md5($password),
+			);
+
+			$wpdb->insert('user' , $data);
+
+			return true;
+		}
 
 		public function userdata($id)
 		{
 			global $wpdb;
-			return $wpdb->get_results($wpdb->prepare("SELECT * FROM `user` WHERE id=%d",$id));
+			return $wpdb->get_row($wpdb->prepare("SELECT * FROM `user` WHERE id=%d",$id));
 		}
 
 		public function all_userdata()
@@ -30,7 +58,7 @@
 			
 			$user_status = 1;
 
-			$select_user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM user WHERE user_username = %s AND user_password = %s AND user_status = '%d'", $_POST['login_username'], $_POST['login_password'] , $user_status ) );
+			$select_user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM user WHERE user_username = %s AND user_password = %s AND user_status = '%d'", $_POST['login_username'], md5($_POST['login_password']) , $user_status ) );
 
 			if( $select_user ){
 				$_SESSION['user_id'] = $select_user->id;
@@ -197,6 +225,35 @@
 			}
 			else{
 				return false;
+			}
+		}
+
+		public function companyData()
+		{
+			global $wpdb;
+			return $wpdb->get_row($wpdb->prepare("SELECT * FROM company WHERE 1=%d",1));
+		}
+		public function update_company_detail($cname,$clogo,$cemail,$caddress,$cphone,$clocation){
+			global $wpdb;
+
+			$count = $wpdb->get_var("SELECT COUNT(*) FROM `company`");
+
+			$data = array(
+				'company_name'=>$cname,
+				'company_logo'=>$clogo,
+				'company_phone'=>$cphone,
+				'company_email'=>$cemail,
+				'company_address'=>$caddress,
+				'company_location'=>$clocation,
+			);
+
+			if($count == 0){
+				$wpdb->insert( 'company' , $data );
+				return true;
+			}
+			else{
+				$wpdb->update( 'company' , $data , array( 'id' => 1 ) );
+				return true;
 			}
 		}
 	}

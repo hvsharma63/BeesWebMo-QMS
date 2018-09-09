@@ -20,8 +20,8 @@
                         <div class="uk-dropdown uk-dropdown-small">
                             <ul class="uk-nav js-uk-prevent">
                                 <li><a style="pointer-events: none;cursor: default;text-decoration: none;color: white;">LINKS</a></li><hr>
-                                <li><a href="page_settings.html">Display URL</a></li>
-                                <li><a href="issue_token.php">Issue Token URL</a></li>
+                                <li><a href="<?php echo SITE_URL; ?>/display/display.php">Display URL</a></li>
+                                <li><a href="<?php echo SITE_URL; ?>/display/issue_token.php">Issue Token URL</a></li>
                             </ul>
                         </div>
                     </li>

@@ -96,10 +96,16 @@
                                 <td><?php echo $dep_start; ?></td>  
                                 <td>
                                     <!-- <div class="hidden"><?php echo $users_list_result->user_is_active ?></div> -->
-                                    <a href='department-edit.php?editid=<?php echo $dep_id; ?>'><i class="md-icon material-icons md-color-blue-gray-500">edit</i></a>
+                                    <form action="department-edit.php" method="post">
+                                        <input type="hidden" name="id" value="<?php echo $dep_id; ?>">
+                                        <button type="submit" name="idsubmit" class="md-icon material-icons md-color-blue-gray-500">edit</button>
+
+                                        <span  onclick="return confirm_department_delete(<?php echo $current_dept->id; ?>);" data-uk-tooltip="{pos:'top'}" title='Delete Department'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
+                                    </form>
+
                                     <!-- <a href="department-delete.php?deleteid=<?php echo $dep_id; ?>"><span  onclick="return confirm('Are you sure you want to Delete Department?')" data-uk-tooltip="{pos:'top'}" title='Delete User'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span></a> -->
 
-                                    <span  onclick="return confirm_department_delete(<?php echo $current_dept->id; ?>);" data-uk-tooltip="{pos:'top'}" title='Delete Department'><i class="md-icon material-icons md-color-red-500">delete_forever</i></span>
+                                    
                                 </td>
                             </tr>         
                             <?php

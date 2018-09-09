@@ -2,7 +2,10 @@
 
 $page_name = "index";
 include_once '../config.php';
+
 $user->check_userlogin();
+
+
 
 
 /* Get currenlty logged in user all details */
@@ -10,10 +13,7 @@ $user_getinfo = $user->get_userinfo();
 $cnts=$cnt->all_cntdata();
 
 if(isset($_POST['notification_set'])){
-    setcookie('NOTIFICATION_TEXT',$_POST['notification_text'],'/');
-    setcookie('NOTIFICATION_SIZE',$_POST['notification_size'],'/');
-    setcookie('NOTIFICATION_COLOR',$_POST['notification_color'],'/');
-    
+    $mrq->set_values($_POST['notification_text'],$_POST['notification_size'],$_POST['notification_color'],$mrq->get_values()->title,$mrq->get_values()->size,$mrq->get_values()->color);
 }
 
 ?>
@@ -75,7 +75,7 @@ if(isset($_POST['notification_set'])){
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"><span><a href="#">      More Info</a></span>
                             </div>
-                            <span class="uk-text-muted uk-text-small">Today Served</span>
+                            <span class="uk-text-muted uk-text-small">Today Missed</span>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo $call->today_missed(); ?></noscript></span>
                             </h2>
                         </div>
@@ -153,8 +153,8 @@ if(isset($_POST['notification_set'])){
                 <div class="uk-grid" data-uk-grid-margin>
                     <div class="trending-line-chart-wrapper uk-width-medium-1-1">
                         <p>Preview:</p>
-                        <span style="font-size:<?php echo $_COOKIE['NOTIFICATION_SIZE']; ?>;color:<?php echo $_COOKIE['NOTIFICATION_COLOR']; ?>">
-                            <marquee><?php echo $_COOKIE['NOTIFICATION_TITLE']; ?></marquee>
+                        <span style="font-size:<?php echo $mrq->get_values()->size; ?>px;color:<?php echo $mrq->get_values()->color; ?>">
+                            <marquee><?php echo $mrq->get_values()->title; ?></marquee>
                         </span>
                     </div>
                 </div>

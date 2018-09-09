@@ -29,7 +29,7 @@ class Department{
 	{
 		global $wpdb;
 		$wpdb->query($wpdb->prepare("UPDATE `department` SET `department_name`='%s', `department_label`='%s'  WHERE id=%d", $department_name, $department_latter, $id));
-	}
+	}	
 
 	/*public function delete_deptdata($id){
 		global $wpdb;
@@ -40,8 +40,20 @@ class Department{
 	public function add_deptdata($department_name, $department_latter)
 	{
 		global $wpdb;
-		$wpdb->query($wpdb->prepare("INSERT INTO `department` (`department_name`, `department_label`) VALUES ('%s','%s')",$department_name, $department_latter));
-		header('Location:department.php');
+		// $wpdb->query($wpdb->prepare("INSERT INTO `department` (`department_name`, `department_label`) VALUES ('%s','%s')",$department_name, $department_latter));
+
+		$already=$wpdb->get_row($wpdb->prepare("SELECT * FROM `department` WHERE department_name = %s OR department_label = %s", $department_name, $department_latter));
+			if(!$already){
+				$user_data = array(
+					'department_name' => $department_name,
+					'department_label' => $department_latter
+				);
+				$wpdb->insert('department', $user_data);
+				return true;
+			}else{
+				return false;
+			}
+
 	}
 
 	public function department_delete( $id = '' ) {		
