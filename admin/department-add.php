@@ -6,7 +6,17 @@
     $user->check_adminlogin();
     if(isset($_POST['save']))
     {
-        $dept->add_deptdata($_POST['dep_name'],$_POST['dep_letter']);
+        if($_POST['dep_name']=='' || $_POST['dep_letter']==''){
+            $message = 0;
+        }
+        else
+        {   
+            if($dept->add_deptdata($_POST['dep_name'],$_POST['dep_letter'])){
+                $message = 1;
+            }else{
+                $message = 2;
+            }          
+        }
     }
 ?>
 
@@ -71,9 +81,41 @@
 
                     </div> 
                     </form>
-                </div>
+                </div>   
             </div>
-                   
+
+            <?php
+                    if(isset($message)){
+                        if($message == 0){
+                    ?>
+                        <div class="uk-margin-medium-top">
+                            <div class="uk-width-medium-1">
+                                <a class="md-btn md-btn-danger md-btn-wave-light">Something went wrong!</a>
+                            </div>
+                        </div>
+                    <?php        
+                        }
+                    else if($message == 2){
+                    ?>
+                        <div class="uk-margin-medium-top">
+                            <div class="uk-width-medium-1">
+                                <a class="md-btn md-btn-warning md-btn-wave-light">Department is already in use!</a>
+                            </div>
+                        </div>
+                    <?php        
+                        }
+                    else if($message == 1){
+                    ?>
+                        <div class="uk-margin-medium-top">
+                            <div class="uk-width-medium-1">
+                                <a class="md-btn md-btn-warning md-btn-wave-light">Department is Created</a>
+                            </div>
+                        </div>
+                    <?php
+                        }
+                    }
+                    $message = 0;
+                    ?>         
                 </div>
             </div>
 

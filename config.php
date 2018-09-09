@@ -56,4 +56,7 @@ if(!isset($_COOKIE['NOTIFICATION_COLOR'])){
 	setcookie('NOTIFICATION_COLOR','#747a7e');
 }
 
+
+        
+
 do_action( "init" );	

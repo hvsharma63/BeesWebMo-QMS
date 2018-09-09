@@ -1,32 +1,34 @@
 <?php
+
+    // TODO:
+    // [x] add disabled button displaying verified token's emailid
+    // [x] update password function 
+    // [x] 
     include_once '../config.php';
-
-    /*check account exists or not*/
-
-    if($user->checkAccount()){
-        @header("Location: register.php");
+    if(isset($_GET['token'])){
+        $token = $_GET['token'];
+        if($user->check_token($token)){
+            $data = $user->check_token($token);
+        }
+        else{
+            header("Location: forgotPassword.php");
+        }
+    }
+    else{
+        header("Location: forgotPassword.php");
     }
     
-    /*If user is already logged in*/
-    if( isset($_SESSION) && isset($_SESSION['user_id']) && isset($_SESSION['user_role']) ) {
-        @ header("Location: index.php");
-        exit;
-    }
-
     if( isset($_POST['submit_login']) ){
+        
         //$_POST = array_map("TrimData", $_POST );
         //var_dump($_POST);
-        $username = $_POST['login_username'];
-        $password = $_POST['login_password'];
-
-        $login_success = $user->role_login( $username, $password );
-
-        if( $login_success ){
-           @ header("Location: index.php");
-            exit;
+        $new_password = $_POST['user_password'];
+        if( $user->update_password( $new_password, $token ) ){
+            $message = 1;
         }
-
-
+        else{
+            $message = 2;
+        }
     }
 ?>
 
@@ -45,7 +47,7 @@
    <!--  <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32"> -->
 
-    <title>Login | Beeswebmo</title>
+    <title>Password Reset</title>
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
 
@@ -66,34 +68,48 @@
                 <div class="login_heading">
                     <!-- <div class="user_avatar"></div> -->
                     <div>
-                        <h2>BEES TOKEN</h2>
-                        <h5>ENTER THE CREDENTIALS TO LOG IN</h5>
+                        <h2>Create New Password</h2>
+                        <h5>ENTER THE NEW PASSWORD</h5>
                     </div>
                 </div>
                 <form method="POST">
                     <div class="uk-form-row">
-                        <label for="login_username">Username</label>
-                        <input class="md-input" type="text" id="login_username" name="login_username" />
+                        <label for="email">E-mail</label>
+                        <input class="md-input" type="email" id="user_email" value="<?php echo $data->user_email ?>" disabled/>
                     </div>
                     <div class="uk-form-row">
-                        <label for="login_password">Password</label>
-                        <input class="md-input" type="password" id="login_password" name="login_password" />
-                    </div>
-                    <div class="uk-form-row">
-                        <span class="icheck-inline">
-                            <input type="checkbox" name="login_page_stay_signed" id="login_page_stay_signed" data-md-icheck />
-                            <label for="login_page_stay_signed" class="inline-label">Remember me</label>
-                        </span>    
+                        <h2 class="heading_c">Password</h2>
+                        <input type="password" class="md-input" name="user_password" />
+                        <a href="#" class="uk-form-password-toggle" data-uk-form-password>show</a>
                     </div>
                     <div class="uk-margin-medium-top">
-                        <input type="submit" name="submit_login" class="md-btn md-btn-primary md-btn-block md-btn-large" value="Sign In" />
-                    </div>
-                    <div class="uk-margin-top">
-                        <a href="forgotPassword.php" class="uk-float-right">Forgot Password?</a>
+                        <input type="submit" name="submit_login" class="md-btn md-btn-primary md-btn-block md-btn-large" value="Reset Password" />
                     </div>
                 </form>
             </div>
         </div>
+        <?php
+        if(isset($message)){
+            if($message == 1){
+        ?>
+            <div class="uk-margin-medium-top">
+                <div class="uk-width-medium-1">
+                    <a class="md-btn md-btn-success md-btn-wave-light">Password has been reset</a>
+                </div>
+            </div>
+        <?php 
+            }
+            else if($message == 2){
+        ?>
+            <div class="uk-margin-medium-top">
+                <div class="uk-width-medium-1">
+                    <a class="md-btn md-btn-danger md-btn-wave-light">Sorry, Failed!</a>
+                </div>
+            </div>
+        <?php        
+            }
+        }
+        ?>
     </div>
 
     <!-- common functions -->

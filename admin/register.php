@@ -1,32 +1,13 @@
 <?php
     include_once '../config.php';
-
-    /*check account exists or not*/
-
-    if($user->checkAccount()){
-        @header("Location: register.php");
+    if(! $user->checkAccount()){
+        @header("Location: login.php");
     }
-    
     /*If user is already logged in*/
-    if( isset($_SESSION) && isset($_SESSION['user_id']) && isset($_SESSION['user_role']) ) {
-        @ header("Location: index.php");
-        exit;
-    }
-
-    if( isset($_POST['submit_login']) ){
-        //$_POST = array_map("TrimData", $_POST );
-        //var_dump($_POST);
-        $username = $_POST['login_username'];
-        $password = $_POST['login_password'];
-
-        $login_success = $user->role_login( $username, $password );
-
-        if( $login_success ){
-           @ header("Location: index.php");
-            exit;
+    if(isset($_POST['register_user'])){
+        if($user->registerUser( $_POST['register_name'], $_POST['register_username'], $_POST['register_password'],  $_POST['register_email'])){
+            @header('Location: login.php');
         }
-
-
     }
 ?>
 
@@ -45,7 +26,7 @@
    <!--  <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32"> -->
 
-    <title>Login | Beeswebmo</title>
+    <title>Register | Beeswebmo</title>
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
 
@@ -62,34 +43,32 @@
 
     <div class="login_page_wrapper">
         <div class="md-card" id="login_card">
-            <div class="md-card-content large-padding" id="login_form">
-                <div class="login_heading">
-                    <!-- <div class="user_avatar"></div> -->
-                    <div>
-                        <h2>BEES TOKEN</h2>
-                        <h5>ENTER THE CREDENTIALS TO LOG IN</h5>
-                    </div>
-                </div>
-                <form method="POST">
+            <div class="md-card-content large-padding" id="register_form">
+                <button type="button" class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login"></button>
+                <h2 class="heading_a uk-margin-medium-bottom">Create an account</h2>
+                <form method="post">
                     <div class="uk-form-row">
-                        <label for="login_username">Username</label>
-                        <input class="md-input" type="text" id="login_username" name="login_username" />
+                        <label for="register_name">Name</label>
+                        <input class="md-input" type="text" id="register_name" name="register_name" />
                     </div>
                     <div class="uk-form-row">
-                        <label for="login_password">Password</label>
-                        <input class="md-input" type="password" id="login_password" name="login_password" />
+                        <label for="register_username">Username</label>
+                        <input class="md-input" type="text" id="register_username" name="register_username" />
                     </div>
                     <div class="uk-form-row">
-                        <span class="icheck-inline">
-                            <input type="checkbox" name="login_page_stay_signed" id="login_page_stay_signed" data-md-icheck />
-                            <label for="login_page_stay_signed" class="inline-label">Remember me</label>
-                        </span>    
+                        <label for="register_password">Password</label>
+                        <input class="md-input" type="password" id="register_password" name="register_password" />
+                    </div>
+                    <div class="uk-form-row">
+                        <label for="register_password_repeat">Repeat Password</label>
+                        <input class="md-input" type="password" onblur="checkPass()" id="register_password_repeat" name="register_password_repeat" />
+                    </div>
+                    <div class="uk-form-row">
+                        <label for="register_email">E-mail</label>
+                        <input class="md-input" type="text" id="register_email" name="register_email" />
                     </div>
                     <div class="uk-margin-medium-top">
-                        <input type="submit" name="submit_login" class="md-btn md-btn-primary md-btn-block md-btn-large" value="Sign In" />
-                    </div>
-                    <div class="uk-margin-top">
-                        <a href="forgotPassword.php" class="uk-float-right">Forgot Password?</a>
+                        <button type="submit" name="register_user" class="md-btn md-btn-primary md-btn-block md-btn-large">Sign Up</button>
                     </div>
                 </form>
             </div>
@@ -115,15 +94,17 @@
                 root.className += ' app_theme_dark';
             }
         }
-    </script>
 
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-65191727-1', 'auto');
-        ga('send', 'pageview');
+        function checkPass(){
+            var pass = document.getElementById('register_password').value;
+            var repass = document.getElementById('register_password_repeat').value;
+            
+            if(pass != repass){
+                alert("Password does not match!!");
+            }
+
+        }
+
     </script>
 </body>
 

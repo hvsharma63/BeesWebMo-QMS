@@ -1,12 +1,6 @@
 <?php
     include_once '../config.php';
 
-    /*check account exists or not*/
-
-    if($user->checkAccount()){
-        @header("Location: register.php");
-    }
-    
     /*If user is already logged in*/
     if( isset($_SESSION) && isset($_SESSION['user_id']) && isset($_SESSION['user_role']) ) {
         @ header("Location: index.php");
@@ -16,14 +10,15 @@
     if( isset($_POST['submit_login']) ){
         //$_POST = array_map("TrimData", $_POST );
         //var_dump($_POST);
-        $username = $_POST['login_username'];
-        $password = $_POST['login_password'];
+        $email = $_POST['user_email'];
+        $password_reset = $user->send_Link( $email );
 
-        $login_success = $user->role_login( $username, $password );
 
-        if( $login_success ){
-           @ header("Location: index.php");
-            exit;
+        if( $password_reset ){
+            $message = 1;
+        }
+        else{
+            $message = 2;
         }
 
 
@@ -45,7 +40,7 @@
    <!--  <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32"> -->
 
-    <title>Login | Beeswebmo</title>
+    <title>Account Recovery</title>
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
 
@@ -66,34 +61,44 @@
                 <div class="login_heading">
                     <!-- <div class="user_avatar"></div> -->
                     <div>
-                        <h2>BEES TOKEN</h2>
-                        <h5>ENTER THE CREDENTIALS TO LOG IN</h5>
+                        <h2>Account Recovery</h2>
+                        <h5>ENTER THE REGISTERED E-MAIL</h5>
                     </div>
                 </div>
                 <form method="POST">
                     <div class="uk-form-row">
-                        <label for="login_username">Username</label>
-                        <input class="md-input" type="text" id="login_username" name="login_username" />
-                    </div>
-                    <div class="uk-form-row">
-                        <label for="login_password">Password</label>
-                        <input class="md-input" type="password" id="login_password" name="login_password" />
-                    </div>
-                    <div class="uk-form-row">
-                        <span class="icheck-inline">
-                            <input type="checkbox" name="login_page_stay_signed" id="login_page_stay_signed" data-md-icheck />
-                            <label for="login_page_stay_signed" class="inline-label">Remember me</label>
-                        </span>    
+                        <label for="email">E-mail</label>
+                        <input class="md-input" type="email" id="user_email" name="user_email" />
                     </div>
                     <div class="uk-margin-medium-top">
-                        <input type="submit" name="submit_login" class="md-btn md-btn-primary md-btn-block md-btn-large" value="Sign In" />
-                    </div>
-                    <div class="uk-margin-top">
-                        <a href="forgotPassword.php" class="uk-float-right">Forgot Password?</a>
+                        <input type="submit" name="submit_login" class="md-btn md-btn-primary md-btn-block md-btn-large" value="Send Recovery Link" />
                     </div>
                 </form>
             </div>
         </div>
+        <?php
+        if(isset($message)){
+            if($message == 1){
+        ?>
+            <div class="uk-margin-medium-top">
+                <div class="uk-width-medium-1">
+                    <a class="md-btn md-btn-success md-btn-wave-light">Check the mail box!</a>
+                </div>
+            </div>
+        <?php 
+            }
+            else if($message == 2){
+        ?>
+            <div class="uk-margin-medium-top">
+                <div class="uk-width-medium-1">
+                    <a class="md-btn md-btn-warning md-btn-wave-light">Email is not registered!</a>
+                </div>
+            </div>
+        
+        <?php        
+            }
+        }
+        ?>
     </div>
 
     <!-- common functions -->
